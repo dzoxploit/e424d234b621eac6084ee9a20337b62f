@@ -18,7 +18,9 @@ class NewsTableSeeder extends Seeder
                 'content' => $faker->paragraph,
                 'created_at' => now(),
                 'updated_at' => now(),
-                'admin_id' => 2,
+                'penulis_id' => 1,
+                'kategori_id' => 1,
+                'artis_id' => 1
             ]);
         }
     }

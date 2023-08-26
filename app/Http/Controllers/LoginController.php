@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\Admin;
+use App\Models\Penulis;
 use Hash;
 use Validator;
 use Auth;
@@ -29,9 +29,9 @@ class LoginController extends Controller
      *
      * @return response()
      */
-    public function adminDashboard()
+    public function penulisDashboard()
     {
-        $users = Admin::where('id',Auth::user()->id)->first();
+        $users = Penulis::where('id',Auth::user()->id)->first();
         $success =  $users;
 
         return response()->json($success, 200);
@@ -72,7 +72,7 @@ class LoginController extends Controller
      *
      * @return response()
      */
-    public function adminLogin(Request $request)
+    public function penulisLogin(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
@@ -83,13 +83,13 @@ class LoginController extends Controller
             return response()->json(['error' => $validator->errors()->all()]);
         }
 
-        if(auth()->guard('admin')->attempt(['email' => request('email'), 'password' => request('password')])){
+        if(auth()->guard('penulis')->attempt(['email' => request('email'), 'password' => request('password')])){
 
-            config(['auth.guards.api.provider' => 'admin']);
+            config(['auth.guards.api.provider' => 'penulis']);
             
-            $admin = admin::select('admins.*')->find(auth()->guard('admin')->user()->id);
-            $success =  $admin;
-            $success['token'] =  $admin->createToken('MyApp',['admin'])->accessToken; 
+            $penulis = Penulis::select('penulis.*')->find(auth()->guard('penulis')->user()->id);
+            $success =  $penulis;
+            $success['token'] =  $penulis->createToken('MyApp',['penulis'])->accessToken; 
 
             return response()->json($success, 200);
         }else{ 

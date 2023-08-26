@@ -51,14 +51,14 @@ return [
             'provider' => 'users',
         ],
 
-        'admin' => [
+        'penulis' => [
             'driver' => 'session',
-            'provider' => 'admins',
+            'provider' => 'penulis',
         ],
 
-        'admin-api' => [
+        'penulis-api' => [
             'driver' => 'passport',
-            'provider' => 'admins',
+            'provider' => 'penulis',
         ],
     ],
 
@@ -85,9 +85,9 @@ return [
             'model' => App\Models\User::class,
         ],
 
-        'admins' => [
+        'penulis' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Admin::class,
+            'model' => App\Models\Penulis::class,
         ],
 
         // 'users' => [

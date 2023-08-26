@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 
-class Admin extends Authenticatable
+class Penulis extends Authenticatable
 {
     use HasFactory, Notifiable, HasApiTokens;
 
@@ -26,7 +26,7 @@ class Admin extends Authenticatable
     ];
 
     public function news() {
-        return $this->hasOne(Comment::class);
+        return $this->hasOne(News::class);
     }
 
 }

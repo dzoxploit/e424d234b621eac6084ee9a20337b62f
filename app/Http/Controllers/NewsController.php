@@ -6,6 +6,7 @@ use App\Repositories\NewsRepository;
 use App\Http\Requests\NewsRequest;
 use App\Models\News;
 use Auth;
+use Illuminate\Http\Request;
 
 class NewsController extends Controller
 {
@@ -16,24 +17,33 @@ class NewsController extends Controller
         $this->newsRepo = $newsRepo;
     }
 
-    public function indexUser() {
-        $news = News::with('comments')->paginate(10); // You can adjust the number of news per page
+    public function indexUser(Request $request) {
+        
+        if($request->get('category') != null){
+            $news = News::with('penulis','comments','kategori','artis')->where('kategori_id',$request->get('category'))->paginate(10); 
+        }
+
+        if($request->get('artis') != null){
+            $news = News::with('penulis','comments','kategori','artis')->where('kategori_id',$request->get('artis'))->paginate(10); 
+        }
+
+        $news = News::with('penulis','comments','kategori','artis')->paginate(10); // You can adjust the number of news per page
 
         return response()->json($news);
     }
 
     public function detailNews($newsId) {
-        $news = News::with('comments')->where('id',$newsId)->firstOrFail(); // You can adjust the number of news per page
+        $news = News::with('penulis','comments','kategori','artis')->where('id',$newsId)->firstOrFail(); // You can adjust the number of news per page
         return response()->json($news);
     }
 
-    public function indexAdmin() {
+    public function indexPenulis() {
         $news = News::paginate(10); // You can adjust the number of news per page
 
         return response()->json($news);
     }
 
-    public function createAdmin(NewsRequest $request) {
+    public function createPenulis(NewsRequest $request) {
         
         $validatedData = $request->validated();
 
@@ -42,7 +52,7 @@ class NewsController extends Controller
             $validatedData['image'] = $imagePath;
         }
         
-        $validatedData['admin_id'] = Auth::user()->id;
+        $validatedData['penulis_id'] = Auth::user()->id;
 
         $this->newsRepo->createNews($validatedData);
         return response()->json
@@ -59,7 +69,7 @@ class NewsController extends Controller
             $validatedData['image'] = $imagePath;
         }
 
-        $validatedData['admin_id'] = Auth::user()->id;
+        $validatedData['penulis_id'] = Auth::user()->id;
         
         $this->newsRepo->updateNews($validatedData, $id);
         

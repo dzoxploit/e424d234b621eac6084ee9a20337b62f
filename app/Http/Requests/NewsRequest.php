@@ -26,7 +26,9 @@ class NewsRequest extends FormRequest
         return [
             'title' => 'required|string|max:255',
             'content' => 'required|string',
-            'admin_id' => 'nullable',
+            'kategori_id' => 'required',
+            'artis_id' => 'required',
+            'penulis_id' => 'nullable',
             'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Assuming you're uploading images
         ];
     }

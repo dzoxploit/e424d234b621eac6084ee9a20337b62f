@@ -11,7 +11,7 @@ class News extends Model
     use HasFactory;
 
      protected $fillable = [
-        'title', 'content', 'image','admin_id',
+        'title', 'content', 'image','penulis_id', 'kategori_id', 'artis_id'
     ];
 
      protected $appends = ['image_url'];
@@ -26,7 +26,15 @@ class News extends Model
         return $this->hasMany(Comments::class);
     }
 
-     public function admin() {
-        return $this->belongsTo(User::class);
+     public function penulis() {
+        return $this->belongsTo(Penulis::class);
+    }
+
+    public function kategori() {
+        return $this->belongsTo(Kategori::class);
+    }
+
+    public function artis() {
+        return $this->belongsTo(Artis::class);
     }
 }
